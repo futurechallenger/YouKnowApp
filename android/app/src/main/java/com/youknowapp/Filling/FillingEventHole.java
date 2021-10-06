@@ -18,7 +18,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import java.util.Timer;
 
 public class FillingEventHole extends ReactContextBaseJavaModule {
-    FillingEventHole(ReactApplicationContext context) {
+    public FillingEventHole(ReactApplicationContext context) {
         super(context);
     }
 
