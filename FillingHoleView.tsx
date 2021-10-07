@@ -6,6 +6,7 @@ const FillingNativeView = requireNativeComponent('FillingHoleView');
 interface FillingHoleViewProps {
   radius: number;
   color: number; // 1, 2, 3
+  width?: number;
 }
 
 const FillingHoleView: React.FC<FillingHoleViewProps> = props => {

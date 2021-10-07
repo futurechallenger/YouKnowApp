@@ -5,7 +5,6 @@ import android.graphics.Color;
 import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -28,7 +27,6 @@ public class FillingHoleViewManager extends SimpleViewManager<FillingHoleView> {
     @NonNull
     @Override
     protected FillingHoleView createViewInstance(@NonNull ThemedReactContext reactContext) {
-//        ReactImageView v = new ReactImageView(reactContext);
         return new FillingHoleView(reactContext);
     }
 
@@ -41,13 +39,13 @@ public class FillingHoleViewManager extends SimpleViewManager<FillingHoleView> {
     public void setStrokeColor(FillingHoleView fillingHoleView, int color) {
         switch (color) {
             case 1:
-                fillingHoleView.setStrokeColor(Color.RED);
+                fillingHoleView.setBackgroundColor(Color.RED);
                 return;
             case 2:
-                fillingHoleView.setStrokeColor(Color.BLUE);
+                fillingHoleView.setBackgroundColor(Color.GREEN);
                 return;
             default:
-                fillingHoleView.setStrokeColor(Color.YELLOW);
+                fillingHoleView.setBackgroundColor(Color.YELLOW);
                 return;
         }
     }

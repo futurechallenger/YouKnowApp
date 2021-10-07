@@ -5,14 +5,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
 public class FillingHoleView extends View {
     private Paint mPaint;
-    private float mRadius = 50f;
-    private int mStrokeColor;
+    private float mRadius;
+    private int mBgColor;
 
     public FillingHoleView(Context context) {
         super(context);
@@ -35,15 +36,17 @@ public class FillingHoleView extends View {
 
     public void setRadius(float radius) {
         this.mRadius = radius;
+        this.invalidate();
     }
 
-    public int getStrokeColor() {
-        return mStrokeColor;
+    public int getBackgroundColor() {
+        return mBgColor;
     }
 
-    public void setStrokeColor(int color) {
-        this.mStrokeColor = color;
+    public void setBackgroundColor(int color) {
+        this.mBgColor = color;
         this.mPaint.setColor(color);
+        this.invalidate();
     }
 
     @Override
@@ -69,10 +72,12 @@ public class FillingHoleView extends View {
 
         if (widthMode == MeasureSpec.AT_MOST) {
             widthSize = (int) (mRadius * 2) + getPaddingLeft() + getPaddingRight();
+            Log.d("FillingHoleView", "width: " + widthSize);
         }
 
         if (heightMode == MeasureSpec.AT_MOST) {
             heightSize = (int) (mRadius * 2) + getPaddingTop() + getPaddingBottom();
+            Log.d("FillingHoleView", "height: " + widthSize);
         }
 
         setMeasuredDimension(widthSize, heightSize);

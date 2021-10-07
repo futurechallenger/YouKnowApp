@@ -123,7 +123,11 @@ const App = () => {
         <Section title="Show native view">
           <View style={{ flex: 1, justifyContent: 'flex-start' }}>
             <View style={styles.fillingNative}>
-              <FillingHoleView radius={50} color={1} />
+              <View
+                style={{ width: 100, height: 105, backgroundColor: 'white'}}>
+                <FillingHoleView style={{ width: 100, height: 100 }} radius={100} color={1} />
+              </View>
+              <FillingHoleView width={60} radius={30} color={3} />
               <Text>1</Text>
             </View>
             <View style={styles.fillingNative}>
@@ -131,7 +135,7 @@ const App = () => {
               <Text>2</Text>
             </View>
             <View style={styles.fillingNative}>
-              <FillingHoleView radius={50} color={3} />
+              <FillingHoleView width={100} radius={100} color={3} />
               <Text>3</Text>
             </View>
           </View>
@@ -179,7 +183,7 @@ const styles = StyleSheet.create({
   },
   fillingNative: {
     flex: 1,
-    height: 60,
+    height: 160,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
