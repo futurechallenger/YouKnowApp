@@ -18,7 +18,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import java.util.Timer;
 
 public class FillingEventHole extends ReactContextBaseJavaModule {
-    FillingEventHole(ReactApplicationContext context) {
+    public FillingEventHole(ReactApplicationContext context) {
         super(context);
     }
 
@@ -46,6 +46,16 @@ public class FillingEventHole extends ReactContextBaseJavaModule {
         } catch (Exception e) {
             promise.reject(e);
         }
+    }
+
+    @ReactMethod
+    public void addListener(String eventName) {
+        // Keep: Required for RN built in Event Emitter Calls.
+    }
+
+    @ReactMethod
+    public void removeListeners(Integer count) {
+        // Keep: Required for RN built in Event Emitter Calls.
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {

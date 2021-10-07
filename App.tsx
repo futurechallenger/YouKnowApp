@@ -8,7 +8,7 @@
  * @format
  */
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -31,13 +31,14 @@ import {
   // LearnMoreLinks,
   // ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { FillingHoleView } from './FillingHoleView';
 
-const {FillingHoleModule} = NativeModules;
+const { FillingHoleModule } = NativeModules;
 const eventEmitter = new NativeEventEmitter(FillingHoleModule);
 
 const Section: React.FC<{
   title: string;
-}> = ({children, title}) => {
+}> = ({ children, title }) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -119,6 +120,26 @@ const App = () => {
             </View>
           </View>
         </Section>
+        <Section title="Show native view">
+          <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+            <View style={styles.fillingNative}>
+              <View
+                style={{ width: 100, height: 105, backgroundColor: 'white'}}>
+                <FillingHoleView style={{ width: 100, height: 100 }} radius={100} color={1} />
+              </View>
+              <FillingHoleView width={60} radius={30} color={3} />
+              <Text>1</Text>
+            </View>
+            <View style={styles.fillingNative}>
+              <FillingHoleView radius={50} color={2} />
+              <Text>2</Text>
+            </View>
+            <View style={styles.fillingNative}>
+              <FillingHoleView width={100} radius={100} color={3} />
+              <Text>3</Text>
+            </View>
+          </View>
+        </Section>
       </ScrollView>
     </SafeAreaView>
   );
@@ -155,10 +176,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 16,
   },
-  inputWrapper: {paddingRight: 16, flex: 1},
+  inputWrapper: { paddingRight: 16, flex: 1 },
   textInput: {
     backgroundColor: 'powderblue',
     flex: 1,
+  },
+  fillingNative: {
+    flex: 1,
+    height: 160,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: 'powderblue',
   },
 });
 
