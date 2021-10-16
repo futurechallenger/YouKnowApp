@@ -1,7 +1,7 @@
 import React from 'react';
-import { requireNativeComponent } from 'react-native';
+// import { requireNativeComponent } from 'react-native';
 
-const FillingNativeView = requireNativeComponent('FillingHoleView');
+// const FillingNativeView = requireNativeComponent('FillingHoleView');
 
 interface FillingHoleViewProps {
   radius: number;
@@ -10,7 +10,8 @@ interface FillingHoleViewProps {
 }
 
 const FillingHoleView: React.FC<FillingHoleViewProps> = props => {
-  return <FillingNativeView {...props} />;
+  // return <FillingNativeView {...props} />;
+  return <div>Hello native view</div>;
 };
 
 export { FillingHoleView };

@@ -13,11 +13,15 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.util.Timer;
 
+@ReactModule(name = FillingEventHole.MODULE_NAME)
 public class FillingEventHole extends ReactContextBaseJavaModule {
+    public static final String MODULE_NAME = "FillingHoleModule";
+
     public FillingEventHole(ReactApplicationContext context) {
         super(context);
     }
@@ -25,11 +29,11 @@ public class FillingEventHole extends ReactContextBaseJavaModule {
     @NonNull
     @Override
     public String getName() {
-        return "FillingHoleModule";
+        return FillingEventHole.MODULE_NAME;
     }
 
     @ReactMethod
-    public void sendEventInSeconds(long seconds, Promise promise) {
+    public void sendEventInSeconds(int seconds, Promise promise) {
         Log.d("FillEventHole", "Event from native comes in" + seconds);
         try {
             new android.os.Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -59,6 +63,8 @@ public class FillingEventHole extends ReactContextBaseJavaModule {
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {
-        this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+        this.getReactApplicationContext()
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
     }
 }

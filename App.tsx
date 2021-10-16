@@ -120,7 +120,7 @@ const App = () => {
             </View>
           </View>
         </Section>
-        <Section title="Show native view">
+        {/* <Section title="Show native view">
           <View style={{ flex: 1, justifyContent: 'flex-start' }}>
             <View style={styles.fillingNative}>
               <View
@@ -138,8 +138,8 @@ const App = () => {
               <FillingHoleView width={100} radius={100} color={3} />
               <Text>3</Text>
             </View>
-          </View>
-        </Section>
+          </View> 
+        </Section>*/}
       </ScrollView>
     </SafeAreaView>
   );
