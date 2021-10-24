@@ -22,8 +22,10 @@ import {
   EmitterSubscription,
   TextInput,
   Button,
+  TouchableHighlight,
 } from 'react-native';
-
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   Colors,
   // DebugInstructions,
@@ -31,7 +33,9 @@ import {
   // LearnMoreLinks,
   // ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { FillingHoleView } from './FillingHoleView';
+import {Counter} from './js/Counter';
+
+const Stack = createNativeStackNavigator();
 
 const { FillingHoleModule } = NativeModules;
 const eventEmitter = new NativeEventEmitter(FillingHoleModule);
@@ -89,59 +93,81 @@ const App = () => {
     }
   };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
+  const counterExtraData = {initialValue: 0, title: 'Counter'};
 
-        <Section title="Receive event from native">
-          <View
-            style={[
-              styles.container,
-              {
-                backgroundColor: isDarkMode ? Colors.black : Colors.white,
-              },
-            ]}>
-            <View style={styles.container}>
-              <View style={styles.inputContainer}>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.textInput}
-                    editable
-                    placeholder="Seconds to wait"
-                    onChangeText={handleTextChange}
-                  />
-                </View>
-                <Button title="OK" onPress={handlePress} />
-              </View>
-            </View>
-          </View>
-        </Section>
-        {/* <Section title="Show native view">
-          <View style={{ flex: 1, justifyContent: 'flex-start' }}>
-            <View style={styles.fillingNative}>
-              <View
-                style={{ width: 100, height: 105, backgroundColor: 'white'}}>
-                <FillingHoleView style={{ width: 100, height: 100 }} radius={100} color={1} />
-              </View>
-              <FillingHoleView width={60} radius={30} color={3} />
-              <Text>1</Text>
-            </View>
-            <View style={styles.fillingNative}>
-              <FillingHoleView radius={50} color={2} />
-              <Text>2</Text>
-            </View>
-            <View style={styles.fillingNative}>
-              <FillingHoleView width={100} radius={100} color={3} />
-              <Text>3</Text>
-            </View>
-          </View> 
-        </Section>*/}
-      </ScrollView>
-    </SafeAreaView>
+  /**
+   * Notice use `component={() => <YourComponent />}` may introduce some issues.
+   * You can refer to https://reactnavigation.org/docs/hello-react-navigation for more information.
+   */
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={({navigation}) => {
+            const onNavToCounter = () => {
+              navigation.navigate('Counter');
+            };
+
+            return (
+              <SafeAreaView style={backgroundStyle}>
+                <StatusBar
+                  barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                />
+                <ScrollView
+                  contentInsetAdjustmentBehavior="automatic"
+                  style={backgroundStyle}>
+                  <Header />
+
+                  <Section title="Receive event from native">
+                    <View
+                      style={[
+                        styles.container,
+                        {
+                          backgroundColor: isDarkMode
+                            ? Colors.black
+                            : Colors.white,
+                        },
+                      ]}>
+                      <View style={styles.container}>
+                        <View style={styles.inputContainer}>
+                          <View style={styles.inputWrapper}>
+                            <TextInput
+                              style={styles.textInput}
+                              editable
+                              placeholder="Seconds to wait"
+                              onChangeText={handleTextChange}
+                            />
+                          </View>
+                          <Button title="OK" onPress={handlePress} />
+                        </View>
+                      </View>
+                    </View>
+                  </Section>
+                  <Section title="Navigate to Counter">
+                    <View style={styles.container}>
+                      <TouchableHighlight onPress={onNavToCounter}>
+                        <View style={styles.button}>
+                          <Text>Go to Counter</Text>
+                        </View>
+                      </TouchableHighlight>
+                    </View>
+                  </Section>
+                </ScrollView>
+              </SafeAreaView>
+            );
+          }}
+        />
+        {/* <Stack.Screen
+          name="Counter"
+          component={Counter}
+          options={{title: 'Counter'}}
+        /> */}
+        <Stack.Screen name="Counter">
+          {props => <Counter {...props} extraData={counterExtraData} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -181,13 +207,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'powderblue',
     flex: 1,
   },
-  fillingNative: {
+  button: {
     flex: 1,
-    height: 160,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'powderblue',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
   },
 });
 
