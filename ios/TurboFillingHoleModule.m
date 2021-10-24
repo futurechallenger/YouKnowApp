@@ -17,5 +17,8 @@ RCT_EXPORT_MODULE(TurboFillingHoleModule)
   [super setBridge: bridge];
 }
 
+- (NSArray<NSString *> *)supportedEvents {
+  return @[@"FillingHoleV2"];
+}
 
 @end
