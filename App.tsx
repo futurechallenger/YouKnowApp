@@ -34,6 +34,8 @@ import {
   // ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {Counter} from './js/Counter';
+import {getBackgroundStyle} from './js/utils/style';
+import {ReduxCounter} from './js/ReduxCounter';
 
 const Stack = createNativeStackNavigator();
 
@@ -62,10 +64,7 @@ const Section: React.FC<{
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const backgroundStyle = getBackgroundStyle(isDarkMode);
 
   const [text, setText] = useState('');
   const listenersRef = useRef<EmitterSubscription | null>(null);
@@ -165,6 +164,9 @@ const App = () => {
         /> */}
         <Stack.Screen name="Counter">
           {props => <Counter {...props} extraData={counterExtraData} />}
+        </Stack.Screen>
+        <Stack.Screen name="ReduxCounter">
+          {props => <ReduxCounter {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
