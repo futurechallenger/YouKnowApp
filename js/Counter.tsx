@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
   useColorScheme,
 } from 'react-native';
-import {getBackgroundStyle} from './utils/style';
+import { getBackgroundStyle } from './utils/style';
 
 type ExtraData = {
   initialValue: number;
@@ -19,7 +19,7 @@ interface CounterProps {
 }
 
 const Counter: React.FC<CounterProps> = React.memo(
-  ({extraData: {title, initialValue}, ...restProps}) => {
+  ({ extraData: { title, initialValue }, ...restProps }) => {
     console.log('>rest props: ', restProps);
 
     const isDarkMode = useColorScheme() === 'dark';
@@ -31,10 +31,10 @@ const Counter: React.FC<CounterProps> = React.memo(
     };
 
     return (
-      <SafeAreaView style={{...backgroundStyle, flex: 1}}>
+      <SafeAreaView style={{ ...backgroundStyle, flex: 1 }}>
         <View style={styles.container}>
           <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>
               Counter Screen: {title ?? 'Yo'}, initial value is: {initialValue}
             </Text>
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {Counter};
+export { Counter };

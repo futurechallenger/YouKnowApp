@@ -24,8 +24,8 @@ import {
   Button,
   TouchableHighlight,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   Colors,
   // DebugInstructions,
@@ -33,9 +33,9 @@ import {
   // LearnMoreLinks,
   // ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {Counter} from './js/Counter';
-import {getBackgroundStyle} from './js/utils/style';
-import {ReduxCounter} from './js/ReduxCounter';
+import { Counter } from './js/Counter';
+import { getBackgroundStyle } from './js/utils/style';
+import { ReduxCounter } from './js/ReduxCounter';
 
 const Stack = createNativeStackNavigator();
 
@@ -92,7 +92,7 @@ const App = () => {
     }
   };
 
-  const counterExtraData = {initialValue: 0, title: 'Counter'};
+  const counterExtraData = { initialValue: 0, title: 'Counter' };
 
   /**
    * Notice use `component={() => <YourComponent />}` may introduce some issues.
@@ -103,9 +103,9 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
-          component={({navigation}) => {
+          component={({ navigation }) => {
             const onNavToCounter = () => {
-              navigation.navigate('Counter');
+              navigation.navigate('ReduxCounter');
             };
 
             return (

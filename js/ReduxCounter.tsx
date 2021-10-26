@@ -1,13 +1,16 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 interface ReduxCounterProps {}
 
 const ReduxCounter: React.FC<ReduxCounterProps> = React.memo(props => {
+  console.log('>counter redux: ', props);
+
   return (
     <SafeAreaView style={styles.container}>
-      <View></View>
+      <View style={{ flex: 1, backgroundColor: 'powderblue' }}>
+        <Text>counter with redux</Text>
+      </View>
     </SafeAreaView>
   );
 });
@@ -18,4 +21,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {ReduxCounter};
+export { ReduxCounter };
