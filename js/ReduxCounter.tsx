@@ -8,7 +8,7 @@ const ReduxCounter: React.FC<ReduxCounterProps> = React.memo(props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, backgroundColor: 'powderblue' }}>
+      <View style={styles.innerContainer}>
         <Text>counter with redux</Text>
       </View>
     </SafeAreaView>
@@ -18,6 +18,11 @@ const ReduxCounter: React.FC<ReduxCounterProps> = React.memo(props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  innerContainer: {
+    flex: 1,
+    backgroundColor: 'powderblue',
   },
 });
 

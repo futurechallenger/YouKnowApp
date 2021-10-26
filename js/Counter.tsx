@@ -24,6 +24,7 @@ const Counter: React.FC<CounterProps> = React.memo(
 
     const isDarkMode = useColorScheme() === 'dark';
     const backgroundStyle = getBackgroundStyle(isDarkMode);
+    const safeArea = { ...backgroundStyle, flex: 1 };
     const [count, setCount] = useState(initialValue ?? 0);
 
     const onAdd = () => {
@@ -31,10 +32,9 @@ const Counter: React.FC<CounterProps> = React.memo(
     };
 
     return (
-      <SafeAreaView style={{ ...backgroundStyle, flex: 1 }}>
+      <SafeAreaView style={safeArea}>
         <View style={styles.container}>
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={styles.titleWrapper}>
             <Text>
               Counter Screen: {title ?? 'Yo'}, initial value is: {initialValue}
             </Text>
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
+  titleWrapper: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   buttonWrapper: {
     alignSelf: 'stretch',
     alignItems: 'flex-end',

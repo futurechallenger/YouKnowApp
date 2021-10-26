@@ -1,7 +1,7 @@
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-const getBackgroundStyle = isDarkMode => ({
+const getBackgroundStyle = (isDarkMode: boolean) => ({
   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
 });
 
-export {getBackgroundStyle};
+export { getBackgroundStyle };
