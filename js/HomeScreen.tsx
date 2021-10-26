@@ -70,13 +70,11 @@ const styles = StyleSheet.create({
     height: 44,
     marginVertical: 8,
     marginHorizontal: 16,
-    // backgroundColor: 'yellow',
   },
   button: {
     color: 'black',
     height: 44,
     justifyContent: 'center',
-    // backgroundColor: '#DDDDDD',
   },
   separator: {
     flex: 1,
