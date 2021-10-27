@@ -13,7 +13,7 @@
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 
 static void InitializeFlipper(UIApplication *application) {
-  RCTEnableTurboModule(YES);
+  // RCTEnableTurboModule(YES);
   
   FlipperClient *client = [FlipperClient sharedClient];
   SKDescriptorMapper *layoutDescriptorMapper = [[SKDescriptorMapper alloc] initWithDefaults];
