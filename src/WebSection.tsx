@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, useColorScheme, View } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+// import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 interface SectionProps {
   children: any;
@@ -16,7 +16,7 @@ const Section: React.FC<SectionProps> = ({ children, title }) => {
         style={[
           styles.sectionTitle,
           {
-            color: isDarkMode ? Colors.white : Colors.black,
+            color: isDarkMode ? 'white' : 'black',
           },
         ]}>
         {title}
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { Section };
+export { Section as WebSection };
