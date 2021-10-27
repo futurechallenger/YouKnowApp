@@ -31,9 +31,6 @@ const ReduxCounter: React.FC<ReduxCounterProps> = props => {
     <SafeAreaView style={safeArea}>
       <View style={styles.container}>
         <View style={styles.titleWrapper}>
-          {/* <Text>
-            Counter Screen: {title ?? 'Yo'}, initial value is: {initialValue}
-          </Text> */}
           <View>
             <Text>{count}</Text>
           </View>
