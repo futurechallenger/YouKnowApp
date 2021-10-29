@@ -7,7 +7,6 @@ import {
   Text,
   SafeAreaView,
   TouchableHighlight,
-  Platform,
 } from 'react-native';
 
 interface HomeScreenProps {

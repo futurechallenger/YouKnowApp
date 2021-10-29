@@ -1,41 +1,74 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { WebSection } from './src/WebSection';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * Generated with the TypeScript template
+ * https://github.com/react-native-community/react-native-template-typescript
+ *
+ * @format
+ */
 
-const App: React.FC<any> = () => {
-  const [count, setCount] = useState(0);
+import React, { useEffect, useRef } from 'react';
+import {
+  NativeEventEmitter,
+  NativeModules,
+  EmitterSubscription,
+  Platform,
+} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Counter } from './src/Counter';
+import { ReduxCounter } from './src/ReduxCounter';
+import { HomeScreen } from './src/HomeScreen';
+// import { NativeEventScreen } from './js/NativeEventScreen.native';
+
+const Stack = createNativeStackNavigator();
+
+const { FillingHoleModule } = NativeModules;
+const eventEmitter = new NativeEventEmitter(FillingHoleModule);
+
+const App = () => {
+  const listenersRef = useRef<EmitterSubscription | null>(null);
+  useEffect(() => {
+    const eventListener = eventEmitter.addListener('FillingHole', event => {
+      console.log('You received an event', JSON.stringify(event));
+    });
+
+    listenersRef.current = eventListener;
+
+    return () => {
+      listenersRef.current?.remove();
+    };
+  });
+
+  const counterExtraData = { initialValue: 0, title: 'Counter' };
+
+  /**
+   * Notice use `component={() => <YourComponent />}` may introduce some issues.
+   * You can refer to https://reactnavigation.org/docs/hello-react-navigation for more information.
+   */
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Hello from {'\n'}React Native Web!</Text>
-      <TouchableOpacity
-        onPress={() => setCount(count + 1)}
-        style={styles.button}>
-        <Text>Click me!</Text>
-      </TouchableOpacity>
-      <WebSection title="web title">
-        <Text>Hello Web</Text>
-      </WebSection>
-      <Text>You clicked {count} times!</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        {/* {Platform.OS === 'web' ? null : (
+          <Stack.Screen name="NativeEvent" component={NativeEventScreen} />
+        )} */}
+
+        {/* <Stack.Screen
+          name="Counter"
+          component={Counter}
+          options={{title: 'Counter'}}
+        /> */}
+        <Stack.Screen name="Counter">
+          {props => <Counter {...props} extraData={counterExtraData} />}
+        </Stack.Screen>
+        <Stack.Screen name="ReduxCounter">
+          {props => <ReduxCounter {...props} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#C3E8BD',
-    paddingTop: 40,
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: '#ADBDFF',
-    padding: 5,
-    marginVertical: 20,
-    alignSelf: 'flex-start',
-  },
-  title: {
-    fontSize: 40,
-  },
-});
 
 export default App;

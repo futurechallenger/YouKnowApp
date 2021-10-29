@@ -5,9 +5,9 @@ import {
   Text,
   StyleSheet,
   TouchableHighlight,
-  useColorScheme,
+  // useColorScheme,
 } from 'react-native';
-import { getBackgroundStyle } from './utils/style';
+import { getBackgroundStyle } from '../js/utils/style';
 
 type ExtraData = {
   initialValue: number;
@@ -22,8 +22,8 @@ const Counter: React.FC<CounterProps> = React.memo(
   ({ extraData: { title, initialValue }, ...restProps }) => {
     console.log('>rest props: ', restProps);
 
-    const isDarkMode = useColorScheme() === 'dark';
-    const backgroundStyle = getBackgroundStyle(isDarkMode);
+    // const isDarkMode = useColorScheme() === 'dark';
+    const backgroundStyle = {}; //getBackgroundStyle(isDarkMode);
     const safeArea = { ...backgroundStyle, flex: 1 };
     const [count, setCount] = useState(initialValue ?? 0);
 
