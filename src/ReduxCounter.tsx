@@ -4,20 +4,20 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  useColorScheme,
+  // useColorScheme,
   View,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBackgroundStyle } from './utils/style';
+// import { getBackgroundStyle } from '../js/utils/style';
 import { increment } from './counterSlice';
-import { RootState } from '../store';
+import { RootState } from './store';
 
 interface ReduxCounterProps {}
 
 const ReduxCounter: React.FC<ReduxCounterProps> = props => {
   console.log('>counter redux: ', props);
-  const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = getBackgroundStyle(isDarkMode);
+  // const isDarkMode = useColorScheme() === 'dark';
+  const backgroundStyle = {}; //getBackgroundStyle(isDarkMode);
   const safeArea = { ...backgroundStyle, flex: 1 };
 
   const count = useSelector((state: RootState) => {

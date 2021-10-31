@@ -7,7 +7,6 @@ import {
   Text,
   SafeAreaView,
   TouchableHighlight,
-  Platform,
 } from 'react-native';
 
 interface HomeScreenProps {
@@ -35,12 +34,10 @@ const HomeScreen: React.FC<HomeScreenProps> = props => {
   );
 
   const itemSeperator: unknown = ({ highlighted }: any) => {
-    if (Platform.OS !== 'android') {
-      return (
-        // eslint-disable-next-line react-native/no-inline-styles
-        <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
-      );
-    }
+    return (
+      // eslint-disable-next-line react-native/no-inline-styles
+      <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
+    );
   };
 
   return (

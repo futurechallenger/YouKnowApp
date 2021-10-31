@@ -13,7 +13,7 @@ import {
   NativeModules,
 } from 'react-native';
 import { Colors, Header } from 'react-native/Libraries/NewAppScreen';
-import { Section } from './components/Section';
+import { Section } from '../src/components/Section';
 import { getBackgroundStyle } from './utils/style';
 
 const { FillingHoleModule } = NativeModules;
