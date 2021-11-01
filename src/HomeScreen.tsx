@@ -48,6 +48,7 @@ const HomeScreen: React.FC<HomeScreenProps> = props => {
           { key: 'NativeEvent', title: 'Native Event' },
           { key: 'Counter', title: 'Counter with State' },
           { key: 'ReduxCounter', title: 'Counter with Redux' },
+          { key: 'GraphQL', title: 'GraphQL Github' },
         ]}
         renderItem={renderItem}
       />
