@@ -20,9 +20,6 @@ import { Counter } from './src/Counter';
 import { ReduxCounter } from './src/ReduxCounter';
 import { HomeScreen } from './src/HomeScreen';
 import { GithubScreen } from './src/GithubScreen';
-import { loadQuery } from 'react-relay/hooks';
-import graphql from 'babel-plugin-relay/macro';
-import RelayEnvironment from './environment';
 
 // import { NativeEventScreen } from './js/NativeEventScreen.native';
 
@@ -30,16 +27,6 @@ const Stack = createNativeStackNavigator();
 
 const { FillingHoleModule } = NativeModules;
 const eventEmitter = new NativeEventEmitter(FillingHoleModule);
-
-const RepositoryNameQuery = graphql`
-  query AppRepositoryNameQuery {
-    repository(owner: "facebook", name: "relay") {
-      name
-    }
-  }
-`;
-
-const preloadedQuery = loadQuery(RelayEnvironment, RepositoryNameQuery, {});
 
 const App = () => {
   const listenersRef = useRef<EmitterSubscription | null>(null);
@@ -81,13 +68,7 @@ const App = () => {
           {props => <ReduxCounter {...props} />}
         </Stack.Screen>
         <Stack.Screen name="GraphQL">
-          {props => (
-            <GithubScreen
-              {...props}
-              nameQuery={RepositoryNameQuery}
-              preloadedQuery={preloadedQuery}
-            />
-          )}
+          {props => <GithubScreen {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
