@@ -13,7 +13,6 @@ target 'YouKnowApp' do
   )
 
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'YouKnowAppTests' do
     inherit! :complete

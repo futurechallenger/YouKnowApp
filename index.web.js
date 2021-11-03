@@ -11,13 +11,14 @@ if (module.hot) {
   module.hot.accept();
 }
 
-// getGraphqlClient().then(client => {
+const client = getGraphqlClient();
+
 const AppContainer = () => (
-  // <GraphqlProvider client={client}>
-  <Provider store={store}>
-    <App />
-  </Provider>
-  // </GraphqlProvider>
+  <GraphqlProvider client={client}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </GraphqlProvider>
 );
 
 AppRegistry.registerComponent(appName, () => AppContainer);
@@ -25,4 +26,3 @@ AppRegistry.runApplication(appName, {
   initialProps: {},
   rootTag: document.getElementById('app-root'),
 });
-// });

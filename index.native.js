@@ -7,27 +7,18 @@ import App from './App';
 import { name as appName } from './app.json';
 import { Provider } from 'react-redux';
 import { store } from './src/store';
-// import { Provider as GraphqlProvider } from 'urql';
+import { Provider as GraphqlProvider } from 'urql';
 
-// import { getGraphqlClient } from './data/graphqlClient';
+import { getGraphqlClient } from './src/data/graphqlClient';
 
 // TODO: refactor
-// getGraphqlClient().then(client => {
-//   const AppContainer = () => (
-//     <GraphqlProvider client={client}>
-//       <Provider store={store}>
-//         <App />
-//       </Provider>
-//     </GraphqlProvider>
-//   );
-
-//   AppRegistry.registerComponent(appName, () => AppContainer);
-// });
-
+const client = getGraphqlClient();
 const AppContainer = () => (
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <GraphqlProvider client={client}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </GraphqlProvider>
 );
 
 AppRegistry.registerComponent(appName, () => AppContainer);
