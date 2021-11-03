@@ -20,6 +20,7 @@ import { Counter } from './src/Counter';
 import { ReduxCounter } from './src/ReduxCounter';
 import { HomeScreen } from './src/HomeScreen';
 import { GithubScreen } from './src/GithubScreen';
+import { TokenScreen } from './src/TokenScreen';
 
 // import { NativeEventScreen } from './js/NativeEventScreen.native';
 
@@ -50,7 +51,8 @@ const App = () => {
    */
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Token">
+        <Stack.Screen name="Token" component={TokenScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         {/* {Platform.OS === 'web' ? null : (
           <Stack.Screen name="NativeEvent" component={NativeEventScreen} />
