@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 // import { getBackgroundStyle } from '../js/utils/style';
-import { increment } from './counterSlice';
+import { increment } from './slices/counterSlice';
 import { RootState } from './store';
 
 interface ReduxCounterProps {}

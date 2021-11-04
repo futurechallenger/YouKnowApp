@@ -3,6 +3,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GITHUB_TOKEN_KEY } from './utils/constants';
 
 interface TokenScreenProps {
   navigation: any;
@@ -46,7 +47,7 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
 
   const handleNav = async () => {
     try {
-      await AsyncStorage.setItem('@the_secret_token', text);
+      await AsyncStorage.setItem(GITHUB_TOKEN_KEY, text);
       navigation.replace('Tabs');
     } catch (e) {
       // TODO: alert error

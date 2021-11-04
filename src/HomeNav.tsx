@@ -12,7 +12,11 @@ const HomeNav = () => {
 
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: 'Home' }}
+      />
       {/* {Platform.OS === 'web' ? null : (
           <Stack.Screen name="NativeEvent" component={NativeEventScreen} />
         )} */}

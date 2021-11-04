@@ -48,7 +48,11 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Token">
         <Stack.Screen name="Token" component={TokenScreen} />
-        <Stack.Screen name="Tabs" component={Tabs} />
+        <Stack.Screen
+          name="Tabs"
+          component={Tabs}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
