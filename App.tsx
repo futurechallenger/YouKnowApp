@@ -16,11 +16,8 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Counter } from './src/Counter';
-import { ReduxCounter } from './src/ReduxCounter';
-import { HomeScreen } from './src/HomeScreen';
-import { GithubScreen } from './src/GithubScreen';
 import { TokenScreen } from './src/TokenScreen';
+import { Tabs } from './src/Tabs';
 
 // import { NativeEventScreen } from './js/NativeEventScreen.native';
 
@@ -43,8 +40,6 @@ const App = () => {
     };
   });
 
-  const counterExtraData = { initialValue: 0, title: 'Counter' };
-
   /**
    * Notice use `component={() => <YourComponent />}` may introduce some issues.
    * You can refer to https://reactnavigation.org/docs/hello-react-navigation for more information.
@@ -53,25 +48,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Token">
         <Stack.Screen name="Token" component={TokenScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        {/* {Platform.OS === 'web' ? null : (
-          <Stack.Screen name="NativeEvent" component={NativeEventScreen} />
-        )} */}
-
-        {/* <Stack.Screen
-          name="Counter"
-          component={Counter}
-          options={{title: 'Counter'}}
-        /> */}
-        <Stack.Screen name="Counter">
-          {props => <Counter {...props} extraData={counterExtraData} />}
-        </Stack.Screen>
-        <Stack.Screen name="ReduxCounter">
-          {props => <ReduxCounter {...props} />}
-        </Stack.Screen>
-        <Stack.Screen name="GraphQL">
-          {props => <GithubScreen {...props} />}
-        </Stack.Screen>
+        <Stack.Screen name="Tabs" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );

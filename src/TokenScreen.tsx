@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface TokenScreenProps {
@@ -35,9 +30,9 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity disabled={!enabled} onPress={handleNav}>
+        <Button disabled={!enabled} onPress={handleNav}>
           <Text>Next</Text>
-        </TouchableOpacity>
+        </Button>
       ),
     });
   });
@@ -49,8 +44,13 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
     }
   };
 
-  const handleNav = () => {
-    navigation.replace('Home');
+  const handleNav = async () => {
+    try {
+      await AsyncStorage.setItem('@the_secret_token', text);
+      navigation.replace('Tabs');
+    } catch (e) {
+      // TODO: alert error
+    }
   };
 
   return (
