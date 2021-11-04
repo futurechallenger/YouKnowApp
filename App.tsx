@@ -18,6 +18,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TokenScreen } from './src/TokenScreen';
 import { Tabs } from './src/Tabs';
+import { useSelector } from 'react-redux';
+import { RootState } from './src/store';
 
 // import { NativeEventScreen } from './js/NativeEventScreen.native';
 
@@ -28,6 +30,7 @@ const eventEmitter = new NativeEventEmitter(FillingHoleModule);
 
 const App = () => {
   const listenersRef = useRef<EmitterSubscription | null>(null);
+  const authed = useSelector((state: RootState) => state.auth.authed);
   useEffect(() => {
     const eventListener = eventEmitter.addListener('FillingHole', event => {
       console.log('You received an event', JSON.stringify(event));
@@ -47,12 +50,15 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Token">
-        <Stack.Screen name="Token" component={TokenScreen} />
-        <Stack.Screen
-          name="Tabs"
-          component={Tabs}
-          options={{ headerShown: false }}
-        />
+        {!authed ? (
+          <Stack.Screen name="Token" component={TokenScreen} />
+        ) : (
+          <Stack.Screen
+            name="Tabs"
+            component={Tabs}
+            options={{ headerShown: false }}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
