@@ -39,7 +39,7 @@ const authSlice = createSlice({
       state.authed = true;
     });
 
-    builder.addCase(removeToken.fulfilled, state => {
+    builder.addCase(removeToken.rejected, state => {
       state.authed = false;
     });
   },

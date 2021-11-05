@@ -2,8 +2,10 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GITHUB_TOKEN_KEY } from './utils/constants';
+import { authenticate } from './slices/authSlice';
+import { RootState, useAppDispatch } from './store';
 
 interface TokenScreenProps {
   navigation: any;
@@ -12,21 +14,18 @@ interface TokenScreenProps {
 const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
   const [text, setText] = useState('');
   const [enabled, setEnabled] = useState(false);
+  const authed = useSelector((state: RootState) => state.auth.authed);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const readStorage = async () => {
-      try {
-        const t = await AsyncStorage.getItem('@the_secret_token');
-        if (t) {
-          setEnabled(true);
-        }
-      } catch (e) {
-        console.error('>', e);
+    try {
+      if (authed) {
+        setEnabled(true);
       }
-    };
-
-    readStorage();
-  }, []);
+    } catch (e) {
+      console.error('>', e);
+    }
+  }, [authed]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -39,7 +38,10 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
   });
 
   const handleTextChange = (v?: string) => {
-    setText(v ?? '');
+    if (v) {
+      setText(v);
+    }
+
     if (v && !enabled) {
       setEnabled(true);
     }
@@ -47,10 +49,14 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
 
   const handleNav = async () => {
     try {
-      await AsyncStorage.setItem(GITHUB_TOKEN_KEY, text);
+      const ret = await dispatch(authenticate(text)).unwrap();
+      if (ret) {
+        console.log('>result action: ', 'DONE');
+      }
+
       navigation.replace('Tabs');
     } catch (e) {
-      // TODO: alert error
+      // TODO: deal with the error
     }
   };
 
