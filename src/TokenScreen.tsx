@@ -13,19 +13,19 @@ interface TokenScreenProps {
 
 const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
   const [text, setText] = useState('');
-  const [enabled, setEnabled] = useState(false);
   const authed = useSelector((state: RootState) => state.auth.authed);
+  const [enabled, setEnabled] = useState(authed ?? false);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    try {
-      if (authed) {
-        setEnabled(true);
-      }
-    } catch (e) {
-      console.error('>', e);
-    }
-  }, [authed]);
+  // useEffect(() => {
+  //   try {
+  //     if (authed) {
+  //       setEnabled(true);
+  //     }
+  //   } catch (e) {
+  //     console.error('>', e);
+  //   }
+  // }, [authed]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -42,7 +42,7 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
       setText(v);
     }
 
-    if (v && !enabled) {
+    if (text && !enabled) {
       setEnabled(true);
     }
   };
