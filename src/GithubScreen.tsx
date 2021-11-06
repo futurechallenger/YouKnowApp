@@ -1,39 +1,68 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, FlatList, View } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  FlatList,
+  View,
+  ListRenderItemInfo,
+} from 'react-native';
 import { gql, useQuery } from 'urql';
 
-const POKEMONS_QUERY = gql`
-  query Pokemons {
-    pokemons(limit: 10) {
-      id
-      name
+interface RepoEdgeNode {
+  name: string;
+}
+interface RepoEdge {
+  node: RepoEdgeNode;
+}
+
+const REPO_QUERY = gql`
+  {
+    search(query: $query, type: REPOSITORY, first: 50) {
+      repositoryCount
+      pageInfo {
+        endCursor
+        startCursor
+      }
+      edges {
+        node {
+          ... on Repository {
+            name
+          }
+        }
+      }
     }
   }
 `;
 
-const Item = ({ name }) => (
+const Item = ({ name }: RepoEdgeNode) => (
   <View style={styles.item}>
     <Text style={styles.title}>{name}</Text>
   </View>
 );
 
 const GithubScreen = () => {
-  const [result] = useQuery({ query: POKEMONS_QUERY });
+  const [result] = useQuery({
+    query: REPO_QUERY,
+    variables: { query: 'user:facebook' },
+  });
 
   const { data, fetching, error } = result;
 
-  const renderItem = ({ item }) => <Item name={item.name} />;
+  const renderItem = (info: ListRenderItemInfo<RepoEdge>) => (
+    <Item name={info.item?.node?.name} />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
       {fetching && <Text>Loading...</Text>}
 
-      {error && <Text>Oh no... {error.message}</Text>}
+      {error && <Text>Oh no... {JSON.stringify(error)}</Text>}
 
       <FlatList
-        data={data?.pokemons}
+        data={data?.search?.edges}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item?.node?.name}
       />
     </SafeAreaView>
   );
@@ -54,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {GithubScreen};
+export { GithubScreen };
