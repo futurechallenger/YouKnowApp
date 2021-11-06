@@ -19,9 +19,9 @@ const SettingsScreen: React.FC<{}> = () => {
       </ScrollView> */}
       <List.Section>
         <List.Item
-          title="Remove Token"
+          title="Manage your token"
           right={props => (
-            <List.Icon {...props} color={Colors.blue500} icon="delete" />
+            <List.Icon {...props} color={Colors.blue500} icon="chevron-right" />
           )}
           onPress={handlePress}
         />
