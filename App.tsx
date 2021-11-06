@@ -7,19 +7,24 @@
  *
  * @format
  */
-
-import React, { useEffect, useRef } from 'react';
-import {
-  NativeEventEmitter,
-  NativeModules,
-  EmitterSubscription,
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { TokenScreen } from './src/TokenScreen';
-import { Tabs } from './src/Tabs';
+import React, { useEffect, useRef } from 'react';
+import {
+  EmitterSubscription,
+  NativeEventEmitter,
+  NativeModules,
+} from 'react-native';
 import { useSelector } from 'react-redux';
+import { Provider } from 'urql';
+
+import { getGraphqlClient } from './src/data/graphqlClient';
 import { RootState } from './src/store';
+import { Tabs } from './src/Tabs';
+import { TokenScreen } from './src/TokenScreen';
+
+// TODO: refactor
+const client = getGraphqlClient();
 
 // import { NativeEventScreen } from './js/NativeEventScreen.native';
 
@@ -48,19 +53,21 @@ const App = () => {
    * You can refer to https://reactnavigation.org/docs/hello-react-navigation for more information.
    */
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Token">
-        {!authed ? (
-          <Stack.Screen name="Token" component={TokenScreen} />
-        ) : (
-          <Stack.Screen
-            name="Tabs"
-            component={Tabs}
-            options={{ headerShown: false }}
-          />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider value={client}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Token">
+          {!authed ? (
+            <Stack.Screen name="Token" component={TokenScreen} />
+          ) : (
+            <Stack.Screen
+              name="Tabs"
+              component={Tabs}
+              options={{ headerShown: false }}
+            />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

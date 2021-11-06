@@ -7,20 +7,27 @@
  *
  * @format
  */
-
-import React, { useEffect, useRef } from 'react';
-import {
-  NativeEventEmitter,
-  NativeModules,
-  EmitterSubscription,
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useEffect, useRef } from 'react';
+import {
+  EmitterSubscription,
+  NativeEventEmitter,
+  NativeModules,
+} from 'react-native';
+import { useSelector } from 'react-redux';
+import { Provider } from 'urql';
+
 import { Counter } from './src/Counter';
-import { ReduxCounter } from './src/ReduxCounter';
-import { HomeScreen } from './src/HomeScreen';
+import { getGraphqlClient } from './src/data/graphqlClient';
 import { GithubScreen } from './src/GithubScreen';
+import { HomeScreen } from './src/HomeScreen';
+import { ReduxCounter } from './src/ReduxCounter';
+import { RootState } from './src/store';
+import { Tabs } from './src/Tabs';
 import { TokenScreen } from './src/TokenScreen';
+
+const client = getGraphqlClient();
 
 // import { NativeEventScreen } from './js/NativeEventScreen.native';
 
@@ -42,38 +49,28 @@ const App = () => {
       listenersRef.current?.remove();
     };
   });
-
-  const counterExtraData = { initialValue: 0, title: 'Counter' };
+  const authed = useSelector((state: RootState) => state.auth.authed);
 
   /**
    * Notice use `component={() => <YourComponent />}` may introduce some issues.
    * You can refer to https://reactnavigation.org/docs/hello-react-navigation for more information.
    */
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Token">
-        <Stack.Screen name="Token" component={TokenScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        {/* {Platform.OS === 'web' ? null : (
-          <Stack.Screen name="NativeEvent" component={NativeEventScreen} />
-        )} */}
-
-        {/* <Stack.Screen
-          name="Counter"
-          component={Counter}
-          options={{title: 'Counter'}}
-        /> */}
-        <Stack.Screen name="Counter">
-          {props => <Counter {...props} extraData={counterExtraData} />}
-        </Stack.Screen>
-        <Stack.Screen name="ReduxCounter">
-          {props => <ReduxCounter {...props} />}
-        </Stack.Screen>
-        <Stack.Screen name="GraphQL">
-          {props => <GithubScreen {...props} />}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider value={client}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Token">
+          {!authed ? (
+            <Stack.Screen name="Token" component={TokenScreen} />
+          ) : (
+            <Stack.Screen
+              name="Tabs"
+              component={Tabs}
+              options={{ headerShown: false }}
+            />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
