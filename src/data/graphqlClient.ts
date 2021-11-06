@@ -1,4 +1,10 @@
-import { createClient, makeOperation } from 'urql';
+import {
+  createClient,
+  dedupExchange,
+  cacheExchange,
+  fetchExchange,
+} from 'urql';
+import { makeOperation } from 'urql/core';
 import { authExchange, AuthConfig } from '@urql/exchange-auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GITHUB_TOKEN_KEY } from '../utils/constants';
@@ -26,7 +32,7 @@ const authConfig: AuthConfig<AuthState> = {
         ...fetchOptions,
         headers: {
           ...fetchOptions.headers,
-          Authorization: authState.token,
+          Authorization: `Bearer ${authState.token}`,
         },
       },
     });
@@ -48,9 +54,12 @@ const getGraphqlClient = () => {
   const client = createClient({
     url: 'https://api.github.com/graphql',
     exchanges: [
+      dedupExchange,
+      cacheExchange,
       authExchange({
         ...authConfig,
       }),
+      fetchExchange,
     ],
   });
 

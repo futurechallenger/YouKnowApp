@@ -17,7 +17,7 @@ interface RepoEdge {
 }
 
 const REPO_QUERY = gql`
-  {
+  query searchRepos($query: String!) {
     search(query: $query, type: REPOSITORY, first: 50) {
       repositoryCount
       pageInfo {

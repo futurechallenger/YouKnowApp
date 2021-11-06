@@ -18,11 +18,7 @@ import {
 import { useSelector } from 'react-redux';
 import { Provider } from 'urql';
 
-import { Counter } from './src/Counter';
 import { getGraphqlClient } from './src/data/graphqlClient';
-import { GithubScreen } from './src/GithubScreen';
-import { HomeScreen } from './src/HomeScreen';
-import { ReduxCounter } from './src/ReduxCounter';
 import { RootState } from './src/store';
 import { Tabs } from './src/Tabs';
 import { TokenScreen } from './src/TokenScreen';
