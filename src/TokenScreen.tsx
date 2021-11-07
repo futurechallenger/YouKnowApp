@@ -17,16 +17,6 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
   const [enabled, setEnabled] = useState(authed ?? false);
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   try {
-  //     if (authed) {
-  //       setEnabled(true);
-  //     }
-  //   } catch (e) {
-  //     console.error('>', e);
-  //   }
-  // }, [authed]);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -38,9 +28,7 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
   });
 
   const handleTextChange = (v?: string) => {
-    if (v) {
-      setText(v);
-    }
+    setText(v ?? '');
 
     if (text && !enabled) {
       setEnabled(true);
@@ -67,6 +55,9 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
         <TextInput
           style={styles.input}
           onChangeText={handleTextChange}
+          onChange={ev => {
+            handleTextChange(ev?.nativeEvent?.text);
+          }}
           value={text}
         />
       </View>
