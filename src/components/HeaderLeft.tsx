@@ -7,6 +7,9 @@ interface HeaderLeftProps {
   handlePress: () => void;
 }
 
+/**
+ *  TODO: Deal with navigation button in `android`
+ */
 const HeaderLeft: React.FC<HeaderLeftProps> = ({
   title,
   handlePress = () => {},
