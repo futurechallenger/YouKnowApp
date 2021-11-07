@@ -54,7 +54,7 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
         console.log('>result action: ', 'DONE');
       }
 
-      navigation.replace('Tabs');
+      navigation.replace('Repo');
     } catch (e) {
       // TODO: deal with the error
     }

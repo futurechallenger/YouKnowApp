@@ -4,8 +4,7 @@ import { GithubScreen } from './GithubScreen';
 import { TokenScreen } from './TokenScreen';
 import { useSelector } from 'react-redux';
 import { RootState } from './store';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { HeaderLeft } from './components/HeaderLeft';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,34 +18,28 @@ const RepoNav = () => {
           component={TokenScreen}
           options={({ navigation }) => ({
             headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack();
-                }}>
-                <View style={styles.headerLeft}>
-                  <Ionicons
-                    name="chevron-back-outline"
-                    size={30}
-                    color="#0E7AFE"
-                  />
-                  <Text>Home</Text>
-                </View>
-              </TouchableOpacity>
+              <HeaderLeft
+                title="Home"
+                handlePress={() => navigation.goBack()}
+              />
             ),
           })}
         />
       ) : null}
-      <Stack.Screen name="Repo" component={GithubScreen} />
+      <Stack.Screen
+        name="Repo"
+        component={GithubScreen}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <HeaderLeft
+              title="Home"
+              handlePress={() => navigation.popToTop()}
+            />
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  headerLeft: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-});
 
 export { RepoNav };
