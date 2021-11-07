@@ -15,13 +15,10 @@ import {
   NativeEventEmitter,
   NativeModules,
 } from 'react-native';
-import { useSelector } from 'react-redux';
 import { Provider } from 'urql';
 
 import { getGraphqlClient } from './src/data/graphqlClient';
-import { RootState } from './src/store';
 import { Tabs } from './src/Tabs';
-import { TokenScreen } from './src/TokenScreen';
 
 const client = getGraphqlClient();
 
@@ -45,7 +42,6 @@ const App = () => {
       listenersRef.current?.remove();
     };
   });
-  const authed = useSelector((state: RootState) => state.auth.authed);
 
   /**
    * Notice use `component={() => <YourComponent />}` may introduce some issues.
@@ -55,15 +51,11 @@ const App = () => {
     <Provider value={client}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Token">
-          {!authed ? (
-            <Stack.Screen name="Token" component={TokenScreen} />
-          ) : (
-            <Stack.Screen
-              name="Tabs"
-              component={Tabs}
-              options={{ headerShown: false }}
-            />
-          )}
+          <Stack.Screen
+            name="Tabs"
+            component={Tabs}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

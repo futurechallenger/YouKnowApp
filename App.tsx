@@ -35,7 +35,6 @@ const eventEmitter = new NativeEventEmitter(FillingHoleModule);
 
 const App = () => {
   const listenersRef = useRef<EmitterSubscription | null>(null);
-  const authed = useSelector((state: RootState) => state.auth.authed);
   useEffect(() => {
     const eventListener = eventEmitter.addListener('FillingHole', event => {
       console.log('You received an event', JSON.stringify(event));
@@ -56,15 +55,11 @@ const App = () => {
     <Provider value={client}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Token">
-          {!authed ? (
-            <Stack.Screen name="Token" component={TokenScreen} />
-          ) : (
-            <Stack.Screen
-              name="Tabs"
-              component={Tabs}
-              options={{ headerShown: false }}
-            />
-          )}
+          <Stack.Screen
+            name="Tabs"
+            component={Tabs}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

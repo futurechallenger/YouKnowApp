@@ -2,8 +2,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Counter } from './Counter';
 import { ReduxCounter } from './ReduxCounter';
-import { GithubScreen } from './GithubScreen';
 import { HomeScreen } from './HomeScreen';
+import { RepoNav } from './RepoNav';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,9 +32,11 @@ const HomeNav = () => {
       <Stack.Screen name="ReduxCounter">
         {props => <ReduxCounter {...props} />}
       </Stack.Screen>
-      <Stack.Screen name="GraphQL">
-        {props => <GithubScreen {...props} />}
-      </Stack.Screen>
+      <Stack.Screen
+        name="RepoNav"
+        component={RepoNav}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
