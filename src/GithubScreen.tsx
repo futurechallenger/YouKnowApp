@@ -55,6 +55,12 @@ const GithubScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}></View>
       {fetching && <Text>Loading...</Text>}
 
       {error && <Text>Oh no... {JSON.stringify(error)}</Text>}

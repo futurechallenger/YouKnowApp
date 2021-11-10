@@ -15,7 +15,7 @@ const authenticate = createAsyncThunk<boolean, string, any>(
   },
 );
 
-const removeToken = createAsyncThunk<boolean, string, any>(
+const removeToken = createAsyncThunk<boolean, void, any>(
   'users/signout',
   async () => {
     try {

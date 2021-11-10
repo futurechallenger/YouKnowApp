@@ -1,12 +1,21 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { List, Colors } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GITHUB_TOKEN_KEY } from './utils/constants';
+import { removeToken } from './slices/authSlice';
+import { useAppDispatch } from './store';
 
 const SettingsScreen: React.FC<{}> = () => {
+  const dispatch = useAppDispatch();
   const handlePress = async () => {
-    await AsyncStorage.removeItem(GITHUB_TOKEN_KEY);
+    // await AsyncStorage.removeItem(GITHUB_TOKEN_KEY);
+    try {
+      const ret = await dispatch(removeToken()).unwrap();
+      if (ret) {
+        // Alert success
+      }
+    } catch (e) {
+      console.error('ERROR: ', e);
+    }
   };
 
   return (

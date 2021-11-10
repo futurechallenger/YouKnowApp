@@ -15,13 +15,10 @@ import {
   NativeEventEmitter,
   NativeModules,
 } from 'react-native';
-import { useSelector } from 'react-redux';
 import { Provider } from 'urql';
 
 import { getGraphqlClient } from './src/data/graphqlClient';
-import { RootState } from './src/store';
 import { Tabs } from './src/Tabs';
-import { TokenScreen } from './src/TokenScreen';
 
 // TODO: refactor
 const client = getGraphqlClient();

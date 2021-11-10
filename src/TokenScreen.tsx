@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import { useSelector, useDispatch } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 import { authenticate } from './slices/authSlice';
 import { RootState, useAppDispatch } from './store';
 
