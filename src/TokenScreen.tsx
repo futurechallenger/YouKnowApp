@@ -1,7 +1,7 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 
-import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { authenticate } from './slices/authSlice';
 import { RootState, useAppDispatch } from './store';
@@ -13,8 +13,12 @@ interface TokenScreenProps {
 const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
   const [text, setText] = useState('');
   const authed = useSelector((state: RootState) => state.auth.authed);
-  const [enabled, setEnabled] = useState(authed ?? false);
+  const [enabled, setEnabled] = useState(false);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setEnabled(authed);
+  }, [authed]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -49,9 +53,10 @@ const TokenScreen: React.FC<TokenScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Token Screen</Text>
       <View style={styles.inputWrapper}>
         <TextInput
+          mode="outlined"
+          placeholder="Input your github token here"
           style={styles.input}
           onChangeText={handleTextChange}
           onChange={ev => {
@@ -73,12 +78,10 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     alignSelf: 'stretch',
-    backgroundColor: 'yellow',
     marginTop: 10,
   },
   input: {
     height: 40,
-    borderWidth: 1,
   },
 });
 

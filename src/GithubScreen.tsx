@@ -7,6 +7,7 @@ import {
   View,
   ListRenderItemInfo,
 } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import { gql, useQuery } from 'urql';
 
 interface RepoEdgeNode {
@@ -55,13 +56,11 @@ const GithubScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}></View>
-      {fetching && <Text>Loading...</Text>}
+      {fetching && (
+        <View style={styles.wrapper}>
+          <ActivityIndicator animating={fetching} size="large" />
+        </View>
+      )}
 
       {error && <Text>Oh no... {JSON.stringify(error)}</Text>}
 
@@ -77,6 +76,12 @@ const GithubScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'yellow',
   },
   item: {
     backgroundColor: '#dadada',
