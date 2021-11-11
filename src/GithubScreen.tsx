@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,8 +7,8 @@ import {
   View,
   ListRenderItemInfo,
 } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
-import { gql, useQuery } from 'urql';
+import { ActivityIndicator, Searchbar } from 'react-native-paper';
+import { gql, useQuery, useClient } from 'urql';
 
 interface RepoEdgeNode {
   name: string;
@@ -43,16 +43,52 @@ const Item = ({ name }: RepoEdgeNode) => (
 );
 
 const GithubScreen = () => {
+  const [searchText, setSearchText] = useState('');
+  const client = useClient();
   const [result] = useQuery({
     query: REPO_QUERY,
     variables: { query: 'user:facebook' },
   });
 
+  useEffect(() => {
+    const repoQuery = async () => {
+      const res = await client
+        .query(REPO_QUERY, { query: `user:${searchText}` })
+        .toPromise();
+      return res;
+    };
+
+    repoQuery();
+  }, [searchText, client]);
+
   const { data, fetching, error } = result;
 
-  const renderItem = (info: ListRenderItemInfo<RepoEdge>) => (
-    <Item name={info.item?.node?.name} />
-  );
+  const handleSearchChange = (text: string) => setSearchText(text);
+  const handleIconPress = async () => {
+    const res = await client
+      .query(REPO_QUERY, { query: `user:${searchText}` })
+      .toPromise();
+
+    console.log('>handleIconPress: ', res);
+  };
+
+  const renderItem = (info: ListRenderItemInfo<RepoEdge>) => {
+    console.log('>renderItem: ', info);
+    const { index } = info;
+    if (index === 0) {
+      return (
+        <Searchbar
+          style={styles.item}
+          placeholder="Search"
+          onChangeText={handleSearchChange}
+          onIconPress={handleIconPress}
+          value={searchText}
+        />
+      );
+    } else {
+      return <Item name={info.item?.node?.name} />;
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,12 +99,13 @@ const GithubScreen = () => {
       )}
 
       {error && <Text>Oh no... {JSON.stringify(error)}</Text>}
-
-      <FlatList
-        data={data?.search?.edges}
-        renderItem={renderItem}
-        keyExtractor={item => item?.node?.name}
-      />
+      {data && (
+        <FlatList
+          data={[0, ...(data?.search?.edges ?? [])]}
+          renderItem={renderItem}
+          keyExtractor={item => item?.node?.name}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -81,7 +118,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'yellow',
   },
   item: {
     backgroundColor: '#dadada',
