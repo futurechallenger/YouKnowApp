@@ -67,7 +67,7 @@ const GithubScreen = () => {
       setResult({
         fetching: false,
         data: res.data?.search?.edges ?? [],
-        error: null,
+        error: res.error,
       });
     } catch (e) {
       setResult({ ...result, fetching: false, data: null, error: e });
@@ -101,7 +101,7 @@ const GithubScreen = () => {
       )}
 
       {error && <Text>Oh no... {JSON.stringify(error)}</Text>}
-      {!fetching && (
+      {!fetching && !error && (
         <FlatList
           data={[0, ...(data ?? [])]}
           renderItem={renderItem}
