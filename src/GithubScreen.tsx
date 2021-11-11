@@ -103,6 +103,7 @@ const GithubScreen = () => {
       {error && <Text>Oh no... {JSON.stringify(error)}</Text>}
       {!fetching && !error && (
         <FlatList
+          style={styles.searchTop}
           data={[0, ...(data ?? [])]}
           renderItem={renderItem}
           keyExtractor={item => item?.node?.name}
@@ -129,6 +130,9 @@ const styles = StyleSheet.create({
   },
   search: {
     marginHorizontal: 16,
+  },
+  searchTop: {
+    marginTop: 10,
   },
   title: {
     fontSize: 20,
