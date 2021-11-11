@@ -45,31 +45,33 @@ const Item = ({ name }: RepoEdgeNode) => (
 const GithubScreen = () => {
   const [searchText, setSearchText] = useState('');
   const client = useClient();
-  const [result] = useQuery({
-    query: REPO_QUERY,
-    variables: { query: 'user:facebook' },
+  const [result, setResult] = useState<{
+    fetching: boolean;
+    data: null | any[];
+    error: null | any;
+  }>({
+    fetching: false,
+    data: null,
+    error: null,
   });
-
-  useEffect(() => {
-    const repoQuery = async () => {
-      const res = await client
-        .query(REPO_QUERY, { query: `user:${searchText}` })
-        .toPromise();
-      return res;
-    };
-
-    repoQuery();
-  }, [searchText, client]);
 
   const { data, fetching, error } = result;
 
   const handleSearchChange = (text: string) => setSearchText(text);
   const handleIconPress = async () => {
-    const res = await client
-      .query(REPO_QUERY, { query: `user:${searchText}` })
-      .toPromise();
-
-    console.log('>handleIconPress: ', res);
+    setResult({ fetching: true, data: null, error: null });
+    try {
+      const res = await client
+        .query(REPO_QUERY, { query: `user:${searchText}` })
+        .toPromise();
+      setResult({
+        fetching: false,
+        data: res.data?.search?.edges ?? [],
+        error: null,
+      });
+    } catch (e) {
+      setResult({ ...result, fetching: false, data: null, error: e });
+    }
   };
 
   const renderItem = (info: ListRenderItemInfo<RepoEdge>) => {
@@ -78,7 +80,7 @@ const GithubScreen = () => {
     if (index === 0) {
       return (
         <Searchbar
-          style={styles.item}
+          style={styles.search}
           placeholder="Search"
           onChangeText={handleSearchChange}
           onIconPress={handleIconPress}
@@ -99,9 +101,9 @@ const GithubScreen = () => {
       )}
 
       {error && <Text>Oh no... {JSON.stringify(error)}</Text>}
-      {data && (
+      {!fetching && (
         <FlatList
-          data={[0, ...(data?.search?.edges ?? [])]}
+          data={[0, ...(data ?? [])]}
           renderItem={renderItem}
           keyExtractor={item => item?.node?.name}
         />
@@ -123,6 +125,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#dadada',
     padding: 20,
     marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  search: {
     marginHorizontal: 16,
   },
   title: {
