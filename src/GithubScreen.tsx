@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
+  FlatList,
+  ListRenderItemInfo,
   SafeAreaView,
   StyleSheet,
   Text,
-  FlatList,
   View,
-  ListRenderItemInfo,
 } from 'react-native';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
-import { gql, useQuery, useClient } from 'urql';
+import { gql, useClient } from 'urql';
 
 interface RepoEdgeNode {
   name: string;
