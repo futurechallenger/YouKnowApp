@@ -6,10 +6,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appDirectory = path.resolve(__dirname);
 const { presets } = require(`${appDirectory}/babel.config.js`);
 
-const compileNodeModules = [
-  // Add every react-native package that needs compiling
-  // 'react-native-gesture-handler',
-].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
+const compileNodeModules = ['react-native-vector-icons'].map(moduleName =>
+  path.resolve(appDirectory, `node_modules/${moduleName}`),
+);
 
 const babelLoaderConfiguration = {
   test: /\.js$|tsx?$/,

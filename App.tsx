@@ -20,6 +20,7 @@ import { Provider } from 'urql';
 import { getGraphqlClient } from './src/data/graphqlClient';
 import { Tabs } from './src/Tabs';
 
+// TODO: refactor
 const client = getGraphqlClient();
 
 // import { NativeEventScreen } from './js/NativeEventScreen.native';
